@@ -1,36 +1,10 @@
 # glog
+在[golang/glog](https://github.com/golang/glog) 的基础上做了一些修改。
 
-[![PkgGoDev](https://pkg.go.dev/badge/github.com/golang/glog)](https://pkg.go.dev/github.com/golang/glog)
+## 修改的地方:
+1. 增加每天切割日志文件的功能,程序运行时指定 --dailyRolling=true参数即可
+2. 实现error日志只输出到error文件中，而不会继续输出到info级别的日志文件中
+3. 将默认的刷新缓冲区时间由20s改为5s
 
-Leveled execution logs for Go.
-
-This is an efficient pure Go implementation of leveled logs in the
-manner of the open source C++ package [_glog_](https://github.com/google/glog).
-
-By binding methods to booleans it is possible to use the log package without paying the expense of evaluating the arguments to the log. Through the `-vmodule` flag, the package also provides fine-grained
-control over logging at the file level.
-
-The comment from `glog.go` introduces the ideas:
-
-Package _glog_ implements logging analogous to the Google-internal C++ INFO/ERROR/V setup.  It provides the functions Info, Warning, Error, Fatal, plus formatting variants such as Infof. It also provides V-style loggingcontrolled by the `-v` and `-vmodule=file=2` flags.
-	
-Basic examples:
-
-```go
-glog.Info("Prepare to repel boarders")
-	
-glog.Fatalf("Initialization failed: %s", err)
-```
-	
-See the documentation for the V function for an explanation of these examples:
-
-```go
-if glog.V(2) {
-	glog.Info("Starting transaction...")
-}
-glog.V(2).Infoln("Processed", nItems, "elements")
-```
-
-The repository contains an open source version of the log package used inside Google. The master copy of the source lives inside Google, not here. The code in this repo is for export only and is not itself under development. Feature requests will be ignored.
-
-Send bug reports to golang-nuts@googlegroups.com.
+//假设编译后的可执行程序名为demo,运行时指定log_dir参数将日志文件保存到特定的目录
+// ./demo --log_dir=./log --dailyRolling=true 
