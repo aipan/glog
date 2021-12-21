@@ -1,3 +1,3 @@
-module github.com/aipan/glog
+module github.com/golang/glog
 
 go 1.11
